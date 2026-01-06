@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
+            
+            // Kolom Wajib untuk Peminjaman
+            // foreignId -> otomatis membuat kolom user_id & item_id
+            // constrained -> otomatis menyambungkan ke tabel users & items
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('item_id')->constrained()->onDelete('cascade');
+            
+            $table->date('loan_date');              // Tanggal pinjam
+            $table->date('return_date')->nullable(); // Tanggal kembali (boleh kosong)
+            $table->string('status');               // Status (borrowed/returned)
+            
             $table->timestamps();
         });
     }
